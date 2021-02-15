@@ -2,15 +2,22 @@ import React from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import { MemoryCardRow } from './MemoryCardRow';
+import { CardInformation } from '../constants';
+import { MemoryCard } from './MemoryCard';
 
-export const MemoryCardGrid: React.FC = () => {
+interface Props {
+    cards: CardInformation[];
+}
+
+export const MemoryCardGrid: React.FC<Props> = (props) => {
+    const { cards } = props;
     return (
         <Grid container spacing={1}>
-            <MemoryCardRow />
-            <MemoryCardRow />
-            <MemoryCardRow />
-            <MemoryCardRow />
+            {cards.map(cardInformation => (
+                <Grid key={cardInformation.uid} item xs={4}>
+                    <MemoryCard cardInformation={cardInformation} />
+                </Grid>
+            ))}
         </Grid>
     )
 }

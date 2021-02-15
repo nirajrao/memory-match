@@ -2,16 +2,15 @@ import React from 'react';
 
 import { Container } from '@material-ui/core';
 
+import { useMemoryGameContext } from './state';
 import { MemoryCardGrid } from './components/MemoryCardGrid';
-import { MemoryGameProvider } from './state';
 
 export const MemoryCardsContainer: React.FC = () => {
+    const { allCards } = useMemoryGameContext();
     return (
-        <MemoryGameProvider>
-            <Container maxWidth='md'>
-                <MemoryCardGrid />
-            </Container>
-        </MemoryGameProvider>
+        <Container maxWidth='md'>
+            <MemoryCardGrid cards={Object.values(allCards)} />
+        </Container>
     )
 }
 

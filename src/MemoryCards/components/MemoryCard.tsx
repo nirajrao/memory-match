@@ -1,27 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Card, CardContent } from '@material-ui/core';
-
-import classes from './MemoryCard.module.sass';
+import { CardInformation, CardState } from '../constants';
+import { UnmatchedCard } from './UnmatchedCard';
+import { MatchedCard } from './MatchedCard';
 
 interface Props {
-    uid: number;
-    gid: number;
-    onClick?: () => void;
+    cardInformation: CardInformation;
 }
 
 export const MemoryCard: React.FC<Props> = (props) => {
-    const [isClicked, setIsClicked] = useState<boolean>(false);
-    const { onClick } = props;
-    return (
-        <Card className={isClicked ? classes['Card--selected']: classes.Card} onClick={() => {
-            setIsClicked(!isClicked);
-            onClick?.();
-            }}>
-            <CardContent>
-                <h1>1</h1>
-            </CardContent>
-        </Card>
-    )
-}
+    const { cardInformation, cardInformation: { state } } = props;
 
+    if (state === CardState.MATCHED) {
+        return <MatchedCard />
+    }
+
+    return <UnmatchedCard cardInformation={cardInformation} />
+}
