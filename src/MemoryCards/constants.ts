@@ -5,7 +5,10 @@ export enum CardState {
 }
 
 export interface CardInformation {
-    uid: number,
+    id: number,
+    content: string,
     gid: number,
     state: CardState,
 }
+
+export type ICardInformation = Pick<CardInformation, "content">

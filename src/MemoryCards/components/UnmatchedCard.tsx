@@ -3,39 +3,35 @@ import _ from 'underscore';
 
 import { Card, CardContent } from '@material-ui/core';
 
-import { CardInformation, CardState } from '../constants';
+import { CardState } from '../constants';
 import { useMemoryGameContext } from '../state';
 import classes from './MemoryCard.module.sass';
 
 interface Props {
-    cardInformation: CardInformation;
+    id: number;
 }
 
 export const UnmatchedCard: React.FC<Props> = (props) => {
-    const { cardInformation: { uid, gid, state } } = props;
-    const { allCards, setAllCards, selectedCards, setSelectedCards } = useMemoryGameContext();
-    let modifiedCards;
+    const { id } = props;
+    const { allCards, setAllCards, selectedCardIds, setSelectedCardIds } = useMemoryGameContext();
+    const { state, content } = allCards[id];
     return (
         <Card className={state === CardState.MATCHING ? classes['Card--selected']: classes.Card} onClick={() => {
             switch (state) {
                 case CardState.UNMATCHED:
-                    modifiedCards = { ...allCards };
-                    const matchingCardInformation = { uid, gid ,state: CardState.MATCHING }
-                    modifiedCards[uid] = matchingCardInformation;
-                    setAllCards({ ...modifiedCards })
-                    setSelectedCards([...selectedCards, matchingCardInformation]);
+                    allCards[id].state = CardState.MATCHING;
+                    setAllCards(allCards)
+                    setSelectedCardIds([...selectedCardIds, id]);
                     break;
                 case CardState.MATCHING:
-                    modifiedCards = { ...allCards };
-                    const unmatchedCardInformation = { uid, gid ,state: CardState.UNMATCHED };
-                    modifiedCards[uid] = unmatchedCardInformation;
-                    setAllCards({ ...modifiedCards })
-                    setSelectedCards(_.without(selectedCards, unmatchedCardInformation));
+                    allCards[id].state = CardState.UNMATCHED;
+                    setAllCards(allCards);
+                    setSelectedCardIds(_.without(selectedCardIds, id));
                     break;
             }
         }}>
             <CardContent>
-                <h1>1</h1>
+                <h1>{content}</h1>
             </CardContent>
         </Card>
     )

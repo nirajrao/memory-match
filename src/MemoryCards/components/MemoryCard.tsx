@@ -1,19 +1,23 @@
 import React from 'react';
 
-import { CardInformation, CardState } from '../constants';
+import { CardState } from '../constants';
 import { UnmatchedCard } from './UnmatchedCard';
 import { MatchedCard } from './MatchedCard';
+import { useMemoryGameContext } from '../state';
 
 interface Props {
-    cardInformation: CardInformation;
+    id: number;
 }
 
 export const MemoryCard: React.FC<Props> = (props) => {
-    const { cardInformation, cardInformation: { state } } = props;
+    const { id } = props;
+    const { allCards } = useMemoryGameContext();
+
+    const { state } = allCards[id];
 
     if (state === CardState.MATCHED) {
-        return <MatchedCard />
+        return <MatchedCard id={id} />
     }
 
-    return <UnmatchedCard cardInformation={cardInformation} />
+    return <UnmatchedCard id={id} />
 }
