@@ -20,15 +20,17 @@ function useMemoryGameState(props: Props) {
     )
 
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
+    const [matchedCardIds, setMatchedCardIds] = useState<number[]>([]);
 
     useEffect(() => {
-        if (selectedCardIds.length === 2) {
+        function checkForMatch() {
             const [firstId, secondId] = selectedCardIds;
             const firstSelectedCard = allCards[firstId];
             const secondSelectedCard = allCards[secondId];
             if (checkSelectedCardsEquality(firstSelectedCard, secondSelectedCard)) {
                 allCards[firstId].state = CardState.MATCHED;
                 allCards[secondId].state = CardState.MATCHED;
+                setMatchedCardIds([...matchedCardIds, firstId, secondId])
                 setAllCards(allCards);
             } else {
                 allCards[firstId].state = CardState.UNMATCHED;
@@ -37,9 +39,14 @@ function useMemoryGameState(props: Props) {
             }
             setSelectedCardIds([]);
         }
+        if (selectedCardIds.length === 2) {
+            setTimeout(() => {
+                checkForMatch();
+            }, 1000);
+        }
     }, [selectedCardIds, allCards])
 
-    return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation };
+    return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation, matchedCardIds, setMatchedCardIds };
 }
 
 export const [MemoryGameProvider, useMemoryGameContext] = constate(useMemoryGameState);

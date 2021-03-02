@@ -15,7 +15,7 @@ export const MatchedCard: React.FC<Props> = (props) => {
     const { allCards } = useMemoryGameContext();
     const { content } = allCards[id];
     return (
-        <Card className={classes.Card}>
+        <Card className={classes['Card--matched']}>
             <CardContent>
                 <h1>{content}</h1>
             </CardContent>

@@ -1,6 +1,9 @@
 .Card
   text-align: center
   border: 1px solid
+  &--matched
+    @extend .Card
+    border-color: blue
   &--selected
     @extend .Card
     border-color: red
