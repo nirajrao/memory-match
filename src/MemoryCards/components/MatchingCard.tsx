@@ -15,7 +15,10 @@ interface Props {
 export const MatchingCard: React.FC<Props> = (props) => {
     const { id } = props;
     const { allCards, setAllCards, selectedCardIds, setSelectedCardIds } = useMemoryGameContext();
-    const { content } = allCards[id];
+    const { image } = allCards[id];
+
+    const imageURI = require(`../assets/images/${image}.jpg`);
+
     return (
         <Card className={classes['Card--selected']} onClick={() => {
             allCards[id].state = CardState.UNMATCHED;
@@ -24,7 +27,7 @@ export const MatchingCard: React.FC<Props> = (props) => {
 
             }}>
             <CardContent>
-                <h1>{content}</h1>
+                {image && <img alt="" src={imageURI.default}/>}
             </CardContent>
         </Card>
     )

@@ -11,9 +11,11 @@ interface Props {
 
 function useMemoryGameState(props: Props) {
     const { gameCardInformation } = props;
+    console.log(gameCardInformation);
     const mappedGameCardInformation: {[id: number] : CardInformation} = {}
 
     gameCardInformation.forEach((card) => mappedGameCardInformation[card.id] = card)
+    const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
     const [allCards, setAllCards] = useState<{[id: number] : CardInformation}>(
         mappedGameCardInformation
@@ -30,8 +32,12 @@ function useMemoryGameState(props: Props) {
             if (checkSelectedCardsEquality(firstSelectedCard, secondSelectedCard)) {
                 allCards[firstId].state = CardState.MATCHED;
                 allCards[secondId].state = CardState.MATCHED;
-                setMatchedCardIds([...matchedCardIds, firstId, secondId])
+                const newMatchedCardIds = [...matchedCardIds, firstId, secondId]
+                setMatchedCardIds(newMatchedCardIds);
                 setAllCards(allCards);
+                if (newMatchedCardIds.length === gameCardInformation.length) {
+                    setIsGameFinished(true);
+                }
             } else {
                 allCards[firstId].state = CardState.UNMATCHED;
                 allCards[secondId].state = CardState.UNMATCHED;
@@ -40,13 +46,17 @@ function useMemoryGameState(props: Props) {
             setSelectedCardIds([]);
         }
         if (selectedCardIds.length === 2) {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 checkForMatch();
             }, 1000);
+            return () => {
+                clearTimeout(timer);
+            }
         }
-    }, [selectedCardIds, allCards])
+    }, [matchedCardIds, selectedCardIds, allCards])
 
-    return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation, matchedCardIds, setMatchedCardIds };
+
+    return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation, matchedCardIds, setMatchedCardIds, isGameFinished, setIsGameFinished };
 }
 
 export const [MemoryGameProvider, useMemoryGameContext] = constate(useMemoryGameState);

@@ -1,26 +1,34 @@
 import React from 'react';
 import _ from 'underscore';
 
-import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { Container } from '@material-ui/core';
+import { generateGameCardInformation, isValidCardContentType } from './utils';
+import { MemoryGameProvider } from './state';
+import { GamePage } from './GamePage';
+import data from './assets/data.json';
 
-import { useMemoryGameContext } from './state';
-import { MemoryCardGrid } from './components/MemoryCardGrid';
+interface RouteProps {
+    cardType: string;
+}
 
 export const MemoryCardsContainer: React.FC = () => {
-    const history = useHistory();
-    const { gameCardInformation, matchedCardIds, allCards } = useMemoryGameContext();
+    const { cardType } = useParams<RouteProps>();
 
-    // TODO: Show a Celebration Animation when the game is complete.
-    if (Object.values(allCards).length === matchedCardIds.length) {
-        history.push('/');
+    if (!isValidCardContentType(cardType)) {
+        return null;
     }
 
+    const cardContent = data[cardType];
+
+    const gameCardInformation = _.shuffle(generateGameCardInformation(cardContent));
+
+    const gameCardIds = _.pluck(Object.values(gameCardInformation), 'id');
+
     return (
-        <Container maxWidth='md'>
-            <MemoryCardGrid idList={_.pluck(Object.values(gameCardInformation), 'id')} />
-        </Container>
+        <MemoryGameProvider gameCardInformation={gameCardInformation}>
+            <GamePage gameCardIds={gameCardIds} />
+        </MemoryGameProvider>
     )
 }
 

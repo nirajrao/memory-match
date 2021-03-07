@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'underscore';
 
 import {
     BrowserRouter as Router,
@@ -9,20 +8,17 @@ import {
 
 import { MainMenuContainer } from './MainMenu/MainMenuContainer';
 import { MemoryCardsContainer } from './MemoryCards/MemoryCardsContainer';
-
-import { generateGameCardInformation } from './MemoryCards/utils';
-import { MemoryGameProvider } from './MemoryCards/state';
+import { Success } from './Success/Success';
 
 export const App = () => {
-    const cards = [ {content: 'hi'}, {content: 'bye'}, {content: 'cya'}];
-    const gameCardInformation = _.shuffle(generateGameCardInformation(cards));
     return (
         <Router>
             <Switch>
-                <Route path="/game">
-                    <MemoryGameProvider gameCardInformation={gameCardInformation}>
-                        <MemoryCardsContainer />
-                    </MemoryGameProvider>
+                <Route path="/game/:cardType">
+                    <MemoryCardsContainer />
+                </Route>
+                <Route path="/success">
+                    <Success />
                 </Route>
                 <Route path="/">
                     <MainMenuContainer />

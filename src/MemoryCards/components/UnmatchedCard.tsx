@@ -15,6 +15,7 @@ export const UnmatchedCard: React.FC<Props> = (props) => {
     const { allCards, setAllCards, selectedCardIds, setSelectedCardIds } = useMemoryGameContext();
     return (
         <Card className={classes.Card} onClick={() => {
+            // We don't want to reveal more than 2 cards at a time.
             if (selectedCardIds.length < 2) {
                 allCards[id].state = CardState.MATCHING;
                 setAllCards(allCards)

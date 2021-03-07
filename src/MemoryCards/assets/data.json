@@ -1,0 +1,29 @@
+{
+    "sloths": [
+
+        {
+            "content": "Sloth1",
+            "image": "sloth1"
+        },
+        {
+            "content": "Sloth2",
+            "image": "sloth2"
+        },
+        {
+            "content": "Sloth3",
+            "image": "sloth3"
+        },
+        {
+            "content": "Sloth4",
+            "image": "sloth4"
+        },
+        {
+            "content": "Sloth5",
+            "image": "sloth5"
+        },
+        {
+            "content": "Sloth6",
+            "image": "sloth6"
+        }
+    ]
+}

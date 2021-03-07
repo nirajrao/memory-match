@@ -9,6 +9,10 @@ export interface CardInformation {
     content: string,
     gid: number,
     state: CardState,
+    image?: string,
 }
 
-export type ICardInformation = Pick<CardInformation, "content">
+export const cardContentTypes = ["sloths"];
+export type CardContentType = (typeof cardContentTypes)[number];
+
+export type ICardInformation = Pick<CardInformation, "content" | "image">
