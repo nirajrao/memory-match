@@ -1,6 +1,5 @@
 {
   "name": "memory-match",
-  "homepage": "https://nirajrao.github.io/memory-match",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
