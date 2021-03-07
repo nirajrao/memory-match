@@ -53,7 +53,7 @@ function useMemoryGameState(props: Props) {
                 clearTimeout(timer);
             }
         }
-    }, [matchedCardIds, selectedCardIds, allCards])
+    }, [matchedCardIds, selectedCardIds, allCards, gameCardInformation])
 
 
     return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation, matchedCardIds, setMatchedCardIds, isGameFinished, setIsGameFinished };
