@@ -11,9 +11,9 @@ interface Props {
 export const MemoryCardGrid: React.FC<Props> = (props) => {
     const { idList } = props;
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
             {idList.map(id=> (
-                <Grid key={id} item xs={4}>
+                <Grid key={id} item xs={3}>
                     <MemoryCard id={id} />
                 </Grid>
             ))}

@@ -1,10 +1,15 @@
 .Card
   text-align: center
   border: 1px solid
-  height: 20vh
+  position: relative
   &--matched
     @extend .Card
     border-color: blue
   &--selected
     @extend .Card
     border-color: red
+
+.Image
+  max-width: 720px
+  width: 100%
+  height: auto

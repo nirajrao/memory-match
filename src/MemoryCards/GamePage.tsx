@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Container } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
 
+import { MetricsSection } from './MetricsSection';
 import { MemoryCardGrid } from './components/MemoryCardGrid';
 import { Spacer } from '../components/Spacer';
 import { useMemoryGameContext } from './state';
@@ -21,9 +22,16 @@ export const GamePage: React.FC<Props> = (props) => {
     }
 
     return (
-        <Container maxWidth='md'>
+        <Container maxWidth='xl'>
             <Spacer height={32} />
-            <MemoryCardGrid idList={gameCardIds} />
+            <Grid container spacing={6}>
+                <Grid item xs={10}>
+                    <MemoryCardGrid idList={gameCardIds} />
+                </Grid>
+                <Grid item xs={2}>
+                    <MetricsSection />
+                </Grid>
+            </Grid>
         </Container>
     )
 };

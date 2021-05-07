@@ -11,10 +11,9 @@ interface Props {
 
 function useMemoryGameState(props: Props) {
     const { gameCardInformation } = props;
-    console.log(gameCardInformation);
     const mappedGameCardInformation: {[id: number] : CardInformation} = {}
-
     gameCardInformation.forEach((card) => mappedGameCardInformation[card.id] = card)
+
     const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
     const [allCards, setAllCards] = useState<{[id: number] : CardInformation}>(
@@ -23,6 +22,7 @@ function useMemoryGameState(props: Props) {
 
     const [selectedCardIds, setSelectedCardIds] = useState<number[]>([]);
     const [matchedCardIds, setMatchedCardIds] = useState<number[]>([]);
+    const [numberOfIncorrectPairs, setNumberOfIncorrectPairs] = useState<number>(0);
 
     useEffect(() => {
         function checkForMatch() {
@@ -42,6 +42,7 @@ function useMemoryGameState(props: Props) {
                 allCards[firstId].state = CardState.UNMATCHED;
                 allCards[secondId].state = CardState.UNMATCHED;
                 setAllCards(allCards);
+                setNumberOfIncorrectPairs(numberOfIncorrectPairs + 1);
             }
             setSelectedCardIds([]);
         }
@@ -53,10 +54,10 @@ function useMemoryGameState(props: Props) {
                 clearTimeout(timer);
             }
         }
-    }, [matchedCardIds, selectedCardIds, allCards, gameCardInformation])
+    }, [matchedCardIds, selectedCardIds, allCards, gameCardInformation, setNumberOfIncorrectPairs, numberOfIncorrectPairs])
 
 
-    return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation, matchedCardIds, setMatchedCardIds, isGameFinished, setIsGameFinished };
+    return { allCards, setAllCards, selectedCardIds, setSelectedCardIds, gameCardInformation, matchedCardIds, setMatchedCardIds, isGameFinished, setIsGameFinished, numberOfIncorrectPairs };
 }
 
 export const [MemoryGameProvider, useMemoryGameContext] = constate(useMemoryGameState);

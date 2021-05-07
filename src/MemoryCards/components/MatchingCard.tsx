@@ -26,9 +26,7 @@ export const MatchingCard: React.FC<Props> = (props) => {
             setSelectedCardIds(_.without(selectedCardIds, id));
 
             }}>
-            <CardContent>
-                {image && <img alt="" src={imageURI.default}/>}
-            </CardContent>
+            {image && <img className={classes.Image}  alt="" src={imageURI.default}/>}
         </Card>
     )
 }
